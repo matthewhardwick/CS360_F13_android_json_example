@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
     ListView listView;
     ArrayAdapter<SimpleObject> adapter;
     JSONArray jArray;
+    String tempUrl;
 
     public String json = "https://raw.github.com/matthewhardwick/watts_input_to_json/master/someP1.lib0.json";
 
@@ -75,9 +76,9 @@ public class MainActivity extends Activity {
                         // such as a Book, Periodical, or Member
 
                         // For Reference to get the Checked out Array of a Member to a List
-                        if (simpleObject.getType().equals("Member")) {
+                        if (simpleObject.getType().equals("Member") && jObject.has("Checked_out")) {
                             List<String> checkedOut = new ArrayList<String>();
-                            JSONArray checkedOutArray = jObject.getJSONArray("Checked_Out");
+                            JSONArray checkedOutArray = jObject.getJSONArray("Checked_out");
                             for (int j = 0; j < checkedOutArray.length(); ++j)
                                 checkedOut.add(checkedOutArray.getString(i));
                             // Do something with the List, such as put it in a Member Object for later
@@ -87,12 +88,40 @@ public class MainActivity extends Activity {
                         // update the List View
                         adapter.add(simpleObject);
                     }
-                    Log.d("List Size", Integer.toString(items.size()));
+                    Log.d("List Size", "Size of items: " + Integer.toString(items.size()));
                 } catch (JSONException e) {
                     Log.d("JSON Parse", e.toString());
                 }
             }
         });
+
+        // Added this to show how to get a Thumbnail URL from Google Books, You can loop through
+        // The list of books and periodicals, spin up a new request to fetch that thumbnail for each
+        // and add it to that book or periodicals object. You can use either the ISBN, or ISSN to
+        // fetch this information.
+
+        // NOTE: be sure to copy this url to a web browser and study what the file structure is to
+        // understand why I had to traverse it the way I did. Also, 4808-0172 is an ISSN number,
+        // and you will need to change this to the ISSN or ISBN of the book or periodical you are
+        // searching for.
+        client.get("https://www.googleapis.com/books/v1/volumes?q=4808-0172", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String response) {
+                try {
+                JSONObject jObject = new JSONObject(response);
+                    if (jObject.has("items")){
+                        tempUrl = jObject.getJSONArray("items").getJSONObject(0)
+                                .getJSONObject("volumeInfo").getJSONObject("imageLinks")
+                                .getString("thumbnail");
+                    }
+                    Log.d("Temp URL", tempUrl);
+                } catch (JSONException e) {
+                    Log.d("JSON Parse", e.toString());
+                }
+            }
+
+        });
+
 
     }
 
