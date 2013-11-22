@@ -12,3 +12,5 @@ To Add Android Async HTTP Client Library:
 1. in the `dependencies` section add the following line
   * `compile files('lib/android-async-http-1.4.4.jar')`
   * See: [build.gradle](https://github.com/matthewhardwick/cs360_android_simple_json_parser/blob/master/JSON_to_listview/build.gradle#L26)
+1. Once that is done, add Internet Permissions to the Android Manifest, as seen here:
+  * [AndroidManifest.xml](https://github.com/matthewhardwick/cs360_android_simple_json_parser/blob/master/JSON_to_listview/src/main/AndroidManifest.xml#L11)
