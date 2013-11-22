@@ -11,4 +11,4 @@ To Add Android Async HTTP Client Library:
 1. There exist two build.gradle files, you want to edit the inner most one, in your `src` folder
 1. in the `dependencies` section add the following line
   * `compile files('lib/android-async-http-1.4.4.jar')`
-  * See: [https://github.com/matthewhardwick/cs360_android_simple_json_parser/blob/master/JSON_to_listview/build.gradle]()
+  * See: [https://github.com/matthewhardwick/cs360_android_simple_json_parser/blob/master/JSON_to_listview/build.gradle](https://github.com/matthewhardwick/cs360_android_simple_json_parser/blob/master/JSON_to_listview/build.gradle)
